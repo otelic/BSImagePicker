@@ -87,6 +87,8 @@
 		55EC234218F0A321008F5A02 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EC234118F0A321008F5A02 /* AssetsLibrary.framework */; };
 		55EC234518F1DB6A008F5A02 /* BSSpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC234418F1DB6A008F5A02 /* BSSpeechBubbleView.m */; };
 		55EC235118F2F873008F5A02 /* BSTriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EC235018F2F873008F5A02 /* BSTriangleView.m */; };
+		70D348A31958248400754306 /* BSFakeAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D348A01958248400754306 /* BSFakeAsset.m */; };
+		70D348A41958248400754306 /* BSFakeAssetRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70D348A21958248400754306 /* BSFakeAssetRepresentation.m */; };
 		BB2B90909814568BB3997E1A /* BSZoomOutAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2B99BEDF8860AD297EE80D /* BSZoomOutAnimator.m */; };
 		BB2B929FDF16F341870E5B2A /* BSPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2B980BF19D6B2C0E05F297 /* BSPreviewController.m */; };
 		BB2B92A3E94AD0C3BF3D42D4 /* BSPhotosController+UICollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB2B98E9E8546E358C4B1234 /* BSPhotosController+UICollectionView.m */; };
@@ -170,6 +172,10 @@
 		55EC234418F1DB6A008F5A02 /* BSSpeechBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSSpeechBubbleView.m; sourceTree = "<group>"; };
 		55EC234F18F2F873008F5A02 /* BSTriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSTriangleView.h; sourceTree = "<group>"; };
 		55EC235018F2F873008F5A02 /* BSTriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSTriangleView.m; sourceTree = "<group>"; };
+		70D3489F1958248400754306 /* BSFakeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSFakeAsset.h; sourceTree = "<group>"; };
+		70D348A01958248400754306 /* BSFakeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSFakeAsset.m; sourceTree = "<group>"; };
+		70D348A11958248400754306 /* BSFakeAssetRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSFakeAssetRepresentation.h; sourceTree = "<group>"; };
+		70D348A21958248400754306 /* BSFakeAssetRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSFakeAssetRepresentation.m; sourceTree = "<group>"; };
 		BB2B9033028BA2F8F9C5F5BA /* BSPhotosController+PrivateMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BSPhotosController+PrivateMethods.h"; sourceTree = "<group>"; };
 		BB2B90AF1CED4DE415FD931F /* BSZoomInAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSZoomInAnimator.m; sourceTree = "<group>"; };
 		BB2B90F9017BDA73DC835324 /* BSPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSPreviewController.h; sourceTree = "<group>"; };
@@ -408,6 +414,10 @@
 		55EC233918EF6AEB008F5A02 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				70D3489F1958248400754306 /* BSFakeAsset.h */,
+				70D348A01958248400754306 /* BSFakeAsset.m */,
+				70D348A11958248400754306 /* BSFakeAssetRepresentation.h */,
+				70D348A21958248400754306 /* BSFakeAssetRepresentation.m */,
 				5509A41A192F9F4D006E4DA1 /* BSAssetModel.h */,
 				5509A41B192F9F4D006E4DA1 /* BSAssetModel.m */,
 				5598296C1930ECDF00D68BD5 /* BSAssetsGroupModel.h */,
@@ -685,6 +695,7 @@
 				55A11EE718FE75B300F28CA5 /* ALAsset+Equal.m in Sources */,
 				5509A423192FA2FD006E4DA1 /* BSAlbumTableViewCellFactory.m in Sources */,
 				55A11ED718FC440D00F28CA5 /* BSCheckmarkView.m in Sources */,
+				70D348A31958248400754306 /* BSFakeAsset.m in Sources */,
 				5598296E1930ECDF00D68BD5 /* BSAssetsGroupModel.m in Sources */,
 				5509A41C192F9F4D006E4DA1 /* BSAssetModel.m in Sources */,
 				55EC234518F1DB6A008F5A02 /* BSSpeechBubbleView.m in Sources */,
@@ -693,6 +704,7 @@
 				BB2B992598FC83C26F7BCF0F /* ALAssetsGroup+Equal.m in Sources */,
 				BB2B9B4E9F4BC435FF833E97 /* BSPhotosController.m in Sources */,
 				BB2B94E7BAF0BCCEEFAB30A3 /* BSCollectionController.m in Sources */,
+				70D348A41958248400754306 /* BSFakeAssetRepresentation.m in Sources */,
 				BB2B929FDF16F341870E5B2A /* BSPreviewController.m in Sources */,
 				BB2B93DC4B697E92438D302A /* BSCollectionController+UICollectionView.m in Sources */,
 				BB2B9726523A57B047F419A1 /* BSPhotosController+BSItemsModel.m in Sources */,

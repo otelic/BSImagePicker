@@ -59,6 +59,12 @@
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    BSPhotoCell *cell = (BSPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (cell.isSelected) {
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+        return NO;
+    }
+
     return [self.collectionModel.selectedItems count] < [[BSImagePickerSettings sharedSetting] maximumNumberOfImages] && !self.disableSelection;
 }
 
