@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 #import "BSAssetModel.h"
+#import "BSFakeAsset.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface BSAssetModel () {
@@ -43,6 +44,8 @@
 
         ALAssetsFilter *onlyPhotosFilter = [ALAssetsFilter allPhotos];
         [parentItem setAssetsFilter:onlyPhotosFilter];
+        
+        [mutableAssets addObject:[[BSFakeAsset alloc] initWithImage:[UIImage imageNamed:@"camera in field"]]];
 
         [_assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse
                                       usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {

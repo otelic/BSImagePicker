@@ -9,6 +9,8 @@
 #import "BSFakeAsset.h"
 #import "BSFakeAssetRepresentation.h"
 
+NSString * const BS_NOTIFICATION_CHOOSE_CAMERA = @"BS_NOTIFICATION_CHOOSE_CAMERA";
+
 @interface BSFakeAsset ()
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) BSFakeAssetRepresentation *representation;
@@ -24,7 +26,7 @@
         _image = image;
         _representation = [[BSFakeAssetRepresentation alloc] initWithImage:self.image];
     }
-    
+
     return self;
 }
 
