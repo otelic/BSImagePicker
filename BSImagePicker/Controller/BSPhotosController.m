@@ -243,4 +243,39 @@
     return _zoomOutAnimator;
 }
 
+#pragma mark - 
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [super scrollViewWillBeginDragging:scrollView];
+    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewWillBeginDragging:)]) {
+        [self.scrollDelegate bsScrollViewWillBeginDragging:scrollView];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    [super scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
+        [self.scrollDelegate bsScrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [super scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewDidEndDragging:willDecelerate:)]) {
+        [self.scrollDelegate bsScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [super scrollViewDidScroll:scrollView];
+    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewDidScroll:)]) {
+        [self.scrollDelegate bsScrollViewDidScroll:scrollView];
+    }
+}
+
+
 @end

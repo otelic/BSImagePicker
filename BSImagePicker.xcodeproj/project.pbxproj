@@ -172,6 +172,7 @@
 		55EC234418F1DB6A008F5A02 /* BSSpeechBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSSpeechBubbleView.m; sourceTree = "<group>"; };
 		55EC234F18F2F873008F5A02 /* BSTriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSTriangleView.h; sourceTree = "<group>"; };
 		55EC235018F2F873008F5A02 /* BSTriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSTriangleView.m; sourceTree = "<group>"; };
+		701BF211195D62C2004637A1 /* BSScrollDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSScrollDelegate.h; sourceTree = "<group>"; };
 		70D3489F1958248400754306 /* BSFakeAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSFakeAsset.h; sourceTree = "<group>"; };
 		70D348A01958248400754306 /* BSFakeAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSFakeAsset.m; sourceTree = "<group>"; };
 		70D348A11958248400754306 /* BSFakeAssetRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSFakeAssetRepresentation.h; sourceTree = "<group>"; };
@@ -245,6 +246,7 @@
 				5509A412192F9B27006E4DA1 /* BSTableViewCellFactory.h */,
 				5509A413192F9C18006E4DA1 /* BSCollectionViewCellFactory.h */,
 				559829801931507700D68BD5 /* BSItemsModelDelegate.h */,
+				701BF211195D62C2004637A1 /* BSScrollDelegate.h */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
