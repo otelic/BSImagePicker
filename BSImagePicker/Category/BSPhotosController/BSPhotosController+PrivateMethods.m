@@ -95,7 +95,7 @@
 }
 
 - (void)hideAlbumView {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION object:nil userInfo:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION object:self.albumButton.titleLabel.text userInfo:nil];
     
     __block CGAffineTransform origTransForm = self.speechBubbleView.transform;
 
