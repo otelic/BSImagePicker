@@ -28,7 +28,12 @@
 #import "BSZoomOutAnimator.h"
 #import "BSZoomInAnimator.h"
 
+
+
 @interface BSPhotosController : BSCollectionController
+
+extern NSString * const BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION;
+extern NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) id<BSItemsModel> tableModel;

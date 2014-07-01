@@ -36,6 +36,10 @@
 
 @implementation BSPhotosController
 
+NSString * const BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION";
+NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION";
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         //Set title to empty string, to get rid of "Back" in the back button

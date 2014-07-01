@@ -58,6 +58,8 @@
 #pragma mark - Show and hide album view
 
 - (void)showAlbumView {
+    [[NSNotificationCenter defaultCenter] postNotificationName:BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION object:nil userInfo:nil];
+    
     [self.navigationController.view addSubview:self.coverView];
     [self.navigationController.view addSubview:self.speechBubbleView];
 
@@ -93,6 +95,8 @@
 }
 
 - (void)hideAlbumView {
+    [[NSNotificationCenter defaultCenter] postNotificationName:BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION object:nil userInfo:nil];
+    
     __block CGAffineTransform origTransForm = self.speechBubbleView.transform;
 
     [UIView animateWithDuration:0.2
