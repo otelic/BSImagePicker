@@ -30,7 +30,7 @@
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
     if (self) {
         [[self.imageView superview] addSubview:self.secondImageView];
         [[self.imageView superview] addSubview:self.thirdImageView];
@@ -48,7 +48,13 @@
     [super layoutSubviews];
     
     [self.imageView setFrame:CGRectMake(4, 10, self.imageView.frame.size.width, self.contentView.frame.size.height-10)];
+
+    // Make the thumbnail a bit smaller
+    [self.imageView setFrame:CGRectInset(self.imageView.frame, 8, 8)];
+    
     [self.textLabel setFrame:CGRectMake(self.imageView.frame.origin.x + self.imageView.frame.size.width + 8, self.textLabel.frame.origin.y, self.textLabel.frame.size.width, self.textLabel.frame.size.height)];
+    [self.detailTextLabel setFrame:CGRectMake(self.textLabel.frame.origin.x, self.textLabel.frame.origin.y + self.textLabel.frame.size.height + 8, self.textLabel.frame.size.width, self.textLabel.frame.size.height)];
+
     
     [self.secondImageView.layer setZPosition:self.imageView.layer.zPosition-1];
     [self.thirdImageView.layer setZPosition:self.imageView.layer.zPosition-2];

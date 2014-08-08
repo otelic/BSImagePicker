@@ -23,7 +23,6 @@
 #import "BSScrollDelegate.h"
 #import "BSCollectionController.h"
 #import "BSTableViewCellFactory.h"
-#import "BSSpeechBubbleView.h"
 #import "BSPreviewController.h"
 #import "BSZoomOutAnimator.h"
 #import "BSZoomInAnimator.h"
@@ -39,7 +38,7 @@ extern NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION;
 @property (nonatomic, strong) id<BSItemsModel> tableModel;
 @property (nonatomic, strong) id<BSTableViewCellFactory> tableCellFactory;
 
-@property (nonatomic, strong) BSSpeechBubbleView *speechBubbleView;
+@property (nonatomic, strong) UIView *chooseAlbumView;
 @property (nonatomic, strong) UIView *coverView;
 
 @property (nonatomic, strong) UIBarButtonItem *cancelButton;

@@ -60,6 +60,7 @@ static NSString *kAlbumCellIdentifier =             @"albumCellIdentifier";
         
         [albumCell.imageView setImage:[UIImage imageWithCGImage:assetsGroup.posterImage]];
         [albumCell.textLabel setText:[assetsGroup valueForProperty:ALAssetsGroupPropertyName]];
+        [albumCell.detailTextLabel setText:[NSString stringWithFormat:@"%d", (int)assetsGroup.numberOfAssets]];
         [albumCell setBackgroundColor:[UIColor clearColor]];
         [albumCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         

@@ -64,8 +64,8 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     [super didReceiveMemoryWarning];
 
     //Release these if they aren't visible
-    if(![self.speechBubbleView isDescendantOfView:self.navigationController.view]) {
-        [self setSpeechBubbleView:nil];
+    if(![self.chooseAlbumView isDescendantOfView:self.navigationController.view]) {
+        [self setChooseAlbumView:nil];
         [self setTableView:nil];
         [self setCoverView:nil];
     }
@@ -169,26 +169,22 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     return _albumButton;
 }
 
-- (BSSpeechBubbleView *)speechBubbleView {
-    if(!_speechBubbleView) {
-        _speechBubbleView = [[BSSpeechBubbleView alloc] initWithFrame:CGRectMake(0, 0, 300, 320)];
-        [_speechBubbleView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
-        [[_speechBubbleView contentView] addSubview:self.tableView];
+- (UIView *)chooseAlbumView {
+    if (!_chooseAlbumView) {
+        _chooseAlbumView = [[UIView alloc] init];
+        [_chooseAlbumView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+        [_chooseAlbumView addSubview:self.tableView];
+        [_chooseAlbumView setBackgroundColor:[UIColor whiteColor]];
     }
-
-    //Set speechbubble color to match tab bar color
-    if(![[BSImagePickerSettings sharedSetting] albumTintColor]) {
-        [_speechBubbleView setBackgroundColor:self.navigationController.navigationBar.barTintColor];
-    }
-
-    return _speechBubbleView;
+    
+    return _chooseAlbumView;
 }
 
 - (UITableView *)tableView {
     if(!_tableView) {
         _tableView = [[UITableView alloc] init];
         [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_tableView setBackgroundColor:[UIColor clearColor]];;
         [_tableView setAllowsSelection:YES];
         [_tableView setAllowsMultipleSelection:NO];
