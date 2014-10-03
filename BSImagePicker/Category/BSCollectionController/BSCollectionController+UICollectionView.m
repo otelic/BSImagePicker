@@ -61,7 +61,8 @@
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     BSPhotoCell *cell = (BSPhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
     if (cell.isSelected) {
-        [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+        [collectionView deselectItemAtIndexPath:indexPath animated:YES];        
+        [[collectionView delegate] collectionView:collectionView didDeselectItemAtIndexPath:indexPath];
         return NO;
     }
 
