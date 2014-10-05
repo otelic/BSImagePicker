@@ -43,13 +43,11 @@
     if(![[BSImagePickerSettings sharedSetting] keepSelection]) {
         [self.collectionModel clearSelection];
     }
-
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)albumButtonPressed:(id)sender {
-    if([self.chooseAlbumView isDescendantOfView:self.navigationController.view]) {
-    [self hideAlbumView];
+    if([self.speechBubbleView isDescendantOfView:self.navigationController.view]) {
+        [self hideAlbumView];
     } else {
         [self showAlbumView];
     }
@@ -58,14 +56,12 @@
 #pragma mark - Show and hide album view
 
 - (void)showAlbumView {
-    [[NSNotificationCenter defaultCenter] postNotificationName:BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION object:nil userInfo:nil];
-    
     [self.navigationController.view addSubview:self.coverView];
-    [self.navigationController.view addSubview:self.chooseAlbumView];
-    
-    CGFloat tableViewHeight = MIN(self.tableView.contentSize.height, 240);
-    CGRect frame = CGRectMake(0, 0, self.chooseAlbumView.frame.size.width, tableViewHeight+7);
-    
+    [self.navigationController.view addSubview:self.speechBubbleView];
+
+    CGFloat tableViewHeight = MIN(self.tableController.tableView.contentSize.height, 240);
+    CGRect frame = CGRectMake(0, 0, self.speechBubbleView.frame.size.width, tableViewHeight+7);
+
     //Remember old values
     CGFloat height = frame.size.height;
     CGFloat width = frame.size.width;
@@ -75,39 +71,36 @@
     frame.size.width = 0.0;
     frame.origin.y = self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height/2.0;
     frame.origin.x = (self.view.frame.size.width - frame.size.width)/2.0;
-    [self.chooseAlbumView setFrame:frame];
-    
+    [self.speechBubbleView setFrame:frame];
+
     [UIView animateWithDuration:0.7
                           delay:0.0
          usingSpringWithDamping:0.7
           initialSpringVelocity:0
                         options:0
                      animations:^{
-        CGRect frame = self.chooseAlbumView.frame;
+        CGRect frame = self.speechBubbleView.frame;
         frame.size.height = height;
         frame.size.width = width;
         frame.origin.y = self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height;
         frame.origin.x = (self.view.frame.size.width - frame.size.width)/2.0;
-        [self.chooseAlbumView setFrame:frame];
+        [self.speechBubbleView setFrame:frame];
 
         [self.coverView setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     } completion:nil];
 }
 
 - (void)hideAlbumView {
-    
-    __block CGAffineTransform origTransForm = self.chooseAlbumView.transform;
-    CGRect end_frame = CGRectMake(self.chooseAlbumView.frame.origin.x, self.chooseAlbumView.frame.origin.y, self.chooseAlbumView.frame.size.width, 0);
-    
-    [UIView animateWithDuration:0.2f animations:^{
-        self.chooseAlbumView.frame = end_frame;
-        [self.coverView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
+    __block CGAffineTransform origTransForm = self.speechBubbleView.transform;
 
+    [UIView animateWithDuration:0.2
+                     animations:^{
+        [self.speechBubbleView setTransform:CGAffineTransformConcat(CGAffineTransformMakeScale(0.1, 0.1), CGAffineTransformMakeTranslation(0, -(self.speechBubbleView.frame.size.height/2.0)))];
+        [self.coverView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0]];
     } completion:^(BOOL finished) {
-        [self.chooseAlbumView removeFromSuperview];
+        [self.speechBubbleView removeFromSuperview];
+        [self.speechBubbleView setTransform:origTransForm];
         [self.coverView removeFromSuperview];
-        self.chooseAlbumView.alpha = 1;
-        self.chooseAlbumView.transform = origTransForm;
     }];
 }
 
@@ -122,6 +115,7 @@
 
         [self.previewController setCollectionModel:self.collectionModel];
         [self.previewController setCurrentIndexPath:indexPath];
+        [self.previewController.collectionView setContentInset:self.collectionView.contentInset];
         [self.navigationController pushViewController:self.previewController animated:YES];
 
         [recognizer setEnabled:YES];

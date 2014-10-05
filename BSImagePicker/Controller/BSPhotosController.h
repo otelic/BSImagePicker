@@ -20,25 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import "BSScrollDelegate.h"
 #import "BSCollectionController.h"
 #import "BSTableViewCellFactory.h"
+#import "BSSpeechBubbleView.h"
 #import "BSPreviewController.h"
-#import "BSZoomOutAnimator.h"
-#import "BSZoomInAnimator.h"
-
-
+#import "BSShrinkAnimator.h"
+#import "BSExpandAnimator.h"
+#import "BSTableController.h"
 
 @interface BSPhotosController : BSCollectionController
 
-extern NSString * const BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION;
-extern NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION;
+@property (nonatomic, strong) BSTableController *tableController;
 
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) id<BSItemsModel> tableModel;
-@property (nonatomic, strong) id<BSTableViewCellFactory> tableCellFactory;
-
-@property (nonatomic, strong) UIView *chooseAlbumView;
+@property (nonatomic, strong) BSSpeechBubbleView *speechBubbleView;
 @property (nonatomic, strong) UIView *coverView;
 
 @property (nonatomic, strong) UIBarButtonItem *cancelButton;
@@ -47,9 +41,7 @@ extern NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION;
 
 @property (nonatomic, strong) BSPreviewController *previewController;
 
-@property (nonatomic, strong) BSZoomInAnimator *zoomInAnimator;
-@property (nonatomic, strong) BSZoomOutAnimator *zoomOutAnimator;
-
-@property (nonatomic, weak) id<BSScrollDelegate>scrollDelegate;
+@property (nonatomic, strong) BSExpandAnimator *zoomInAnimator;
+@property (nonatomic, strong) BSShrinkAnimator *zoomOutAnimator;
 
 @end

@@ -20,8 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#import <AssetsLibrary/AssetsLibrary.h>
+#import <UIKit/UIKit.h>
 
-@interface ALAsset (Equal)
+@interface BSCameraView : UIView
+
+@property (nonatomic, strong) UIColor *color;
 
 @end

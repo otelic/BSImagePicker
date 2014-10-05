@@ -25,7 +25,6 @@
 #import "BSAlbumTableViewCellFactory.h"
 #import "BSPhotosController+PrivateMethods.h"
 #import "BSPhotosController+BSItemsModel.h"
-#import "BSPhotosController+UITableView.h"
 #import "BSCollectionController+UICollectionView.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "BSImagePickerSettings.h"
@@ -36,10 +35,6 @@
 
 @implementation BSPhotosController
 
-NSString * const BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_SHOW_ALBUM_VIEW_NOTIFICATION";
-NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION";
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         //Set title to empty string, to get rid of "Back" in the back button
@@ -47,7 +42,9 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
         
         //Register identifiers
         [[self.collectionCellFactory class] registerCellIdentifiersForCollectionView:self.collectionView];
-        [[self.tableCellFactory class] registerCellIdentifiersForTableView:self.tableView];
+        
+        //Add table view controller
+        [self addChildViewController:self.tableController];
 
         [self.collectionView setAllowsMultipleSelection:YES];
         [self.collectionView setScrollEnabled:YES];
@@ -64,9 +61,8 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     [super didReceiveMemoryWarning];
 
     //Release these if they aren't visible
-    if(![self.chooseAlbumView isDescendantOfView:self.navigationController.view]) {
-        [self setChooseAlbumView:nil];
-        [self setTableView:nil];
+    if(![self.speechBubbleView isDescendantOfView:self.navigationController.view]) {
+        [self setSpeechBubbleView:nil];
         [self setCoverView:nil];
     }
 }
@@ -128,14 +124,13 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
 
 #pragma mark - Lazy load
 
-- (id<BSItemsModel>)tableModel {
-    if(!_tableModel) {
-        _tableModel = [[BSAssetsGroupModel alloc] init];
-        [_tableModel setDelegate:self];
-        [_tableModel setupWithParentItem:[[ALAssetsLibrary alloc] init]];
+- (BSTableController *)tableController {
+    if(!_tableController) {
+        _tableController = [[BSTableController alloc] init];
+        [_tableController.tableModel setDelegate:self];
     }
-
-    return _tableModel;
+    
+    return _tableController;
 }
 
 - (UIBarButtonItem *)cancelButton {
@@ -169,32 +164,19 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     return _albumButton;
 }
 
-- (UIView *)chooseAlbumView {
-    if (!_chooseAlbumView) {
-        _chooseAlbumView = [[UIView alloc] init];
-        [_chooseAlbumView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_chooseAlbumView addSubview:self.tableView];
-        [_chooseAlbumView setBackgroundColor:[UIColor whiteColor]];
-    }
-    
-    return _chooseAlbumView;
-}
-
-- (UITableView *)tableView {
-    if(!_tableView) {
-        _tableView = [[UITableView alloc] init];
-        [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        [_tableView setBackgroundColor:[UIColor clearColor]];;
-        [_tableView setAllowsSelection:YES];
-        [_tableView setAllowsMultipleSelection:NO];
-        [_tableView setDelegate:self];
-        [_tableView setDataSource:self];
-
-        [_tableView reloadData];
+- (BSSpeechBubbleView *)speechBubbleView {
+    if(!_speechBubbleView) {
+        _speechBubbleView = [[BSSpeechBubbleView alloc] initWithFrame:CGRectMake(0, 0, 300, 320)];
+        [_speechBubbleView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
+        [[_speechBubbleView contentView] addSubview:self.tableController.tableView];
     }
 
-    return _tableView;
+    //Set speechbubble color to match tab bar color
+    if(![[BSImagePickerSettings sharedSetting] albumTintColor]) {
+        [_speechBubbleView setBackgroundColor:self.navigationController.navigationBar.barTintColor];
+    }
+
+    return _speechBubbleView;
 }
 
 - (UIView *)coverView {
@@ -210,14 +192,6 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     return _coverView;
 }
 
-- (id<BSTableViewCellFactory>)tableCellFactory {
-    if(!_tableCellFactory) {
-        _tableCellFactory = [[BSAlbumTableViewCellFactory alloc] init];
-    }
-
-    return _tableCellFactory;
-}
-
 - (BSPreviewController *)previewController {
     if(!_previewController) {
         _previewController = [[BSPreviewController alloc] initWithNibName:nil bundle:nil];
@@ -227,51 +201,20 @@ NSString * const BSIMAGEPICKER_HIDE_ALBUM_VIEW_NOTIFICATION = @"BSIMAGEPICKER_HI
     return _previewController;
 }
 
-- (BSZoomInAnimator *)zoomInAnimator {
+- (BSExpandAnimator *)zoomInAnimator {
     if(!_zoomInAnimator) {
-        _zoomInAnimator = [[BSZoomInAnimator alloc] init];
+        _zoomInAnimator = [[BSExpandAnimator alloc] init];
     }
 
     return _zoomInAnimator;
 }
 
-- (BSZoomOutAnimator *)zoomOutAnimator {
+- (BSShrinkAnimator *)zoomOutAnimator {
     if(!_zoomOutAnimator) {
-        _zoomOutAnimator = [[BSZoomOutAnimator alloc] init];
+        _zoomOutAnimator = [[BSShrinkAnimator alloc] init];
     }
 
     return _zoomOutAnimator;
 }
-
-#pragma mark - 
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewWillBeginDragging:)]) {
-        [self.scrollDelegate bsScrollViewWillBeginDragging:scrollView];
-    }
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
-{
-    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewWillEndDragging:withVelocity:targetContentOffset:)]) {
-        [self.scrollDelegate bsScrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewDidEndDragging:willDecelerate:)]) {
-        [self.scrollDelegate bsScrollViewDidEndDragging:scrollView willDecelerate:decelerate];
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ([self.scrollDelegate respondsToSelector:@selector(bsScrollViewDidScroll:)]) {
-        [self.scrollDelegate bsScrollViewDidScroll:scrollView];
-    }
-}
-
 
 @end

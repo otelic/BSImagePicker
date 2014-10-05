@@ -25,15 +25,7 @@
 @implementation BSCollectionController (BSItemsModel)
 
 - (void)didUpdateModel:(id<BSItemsModel>)aModel {
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    } completion:^(BOOL finished) {
-        if ([aModel itemAtIndexPath:0] > 0) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]
-                                        atScrollPosition:UICollectionViewScrollPositionTop
-                                                animated:YES];
-        }
-    }];
+    [self.collectionView reloadData];
 }
 
 @end
