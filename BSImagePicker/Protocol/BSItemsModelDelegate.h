@@ -24,6 +24,6 @@
 
 @protocol BSItemsModelDelegate <NSObject>
 
-- (void)didUpdateModel:(id<BSItemsModel>)aModel;
+- (void)didUpdateModel:(id<BSItemsModel>)aModel fromUserInput:(BOOL)activeUser;
 
 @end

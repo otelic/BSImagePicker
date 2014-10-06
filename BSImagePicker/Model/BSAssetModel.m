@@ -63,7 +63,7 @@
 
                 //Enumeration done
                 if(self.delegate) {
-                    [self.delegate didUpdateModel:self];
+                    [self.delegate didUpdateModel:self fromUserInput:NO];
                 }
             }
         }];

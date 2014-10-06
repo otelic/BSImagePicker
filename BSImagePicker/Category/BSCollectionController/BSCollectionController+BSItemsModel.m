@@ -24,7 +24,7 @@
 
 @implementation BSCollectionController (BSItemsModel)
 
-- (void)didUpdateModel:(id<BSItemsModel>)aModel {
+- (void)didUpdateModel:(id<BSItemsModel>)aModel fromUserInput:(BOOL)activeUser {
     [self.collectionView reloadData];
 }
 

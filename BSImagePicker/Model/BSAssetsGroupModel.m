@@ -61,7 +61,7 @@
                 [self setAssetGroups:[mutableGroups copy]];
 
                 if(self.delegate) {
-                    [self.delegate didUpdateModel:self];
+                    [self.delegate didUpdateModel:self fromUserInput:NO];
                 }
             }
         } failureBlock:^(NSError *error) {
@@ -118,7 +118,7 @@
     [self setSelectedGroup:[self itemAtIndexPath:anIndexPath]];
 
     if(self.delegate) {
-        [self.delegate didUpdateModel:self];
+        [self.delegate didUpdateModel:self fromUserInput:YES];
     }
 }
 - (void)deselectItemAtIndexPath:(NSIndexPath *)anIndexPath { }

@@ -24,7 +24,7 @@
 
 @implementation BSTableController (BSItemsModel)
 
-- (void)didUpdateModel:(id<BSItemsModel>)aModel {
+- (void)didUpdateModel:(id<BSItemsModel>)aModel fromUserInput:(BOOL)activeUser {
     [self.tableView reloadData];
 }
 

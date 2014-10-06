@@ -28,9 +28,9 @@
 
 @implementation BSPhotosController (BSItemsModel)
 
-- (void)didUpdateModel:(id<BSItemsModel>)aModel {
+- (void)didUpdateModel:(id<BSItemsModel>)aModel fromUserInput:(BOOL)activeUser {
     if(aModel == self.tableController.tableModel) {
-        [self.tableController didUpdateModel:aModel];
+        [self.tableController didUpdateModel:aModel fromUserInput:activeUser];
 
         ALAssetsGroup *assetsGroup = [[self.tableController.tableModel selectedItems] firstObject];
         
@@ -39,7 +39,7 @@
         
         [self hideAlbumView];
     } else {
-        [super didUpdateModel:aModel];
+        [super didUpdateModel:aModel fromUserInput:activeUser];
     }
 }
 
