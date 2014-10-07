@@ -23,6 +23,7 @@
 #import "BSAssetModel.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "BSImagePickerSettings.h"
+#import "BSFakeAsset.h"
 
 @interface BSAssetModel () {
     id<BSItemsModelDelegate> _delegate;
@@ -54,6 +55,8 @@
             NSAssert(false, @"Unsupported asset type");
         }
 
+        [mutableAssets addObject:[[BSFakeAsset alloc] initWithWhite]];
+        
         [_assetsGroup enumerateAssetsWithOptions:NSEnumerationReverse
                                       usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
             if(result) {

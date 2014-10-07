@@ -14,6 +14,7 @@ Pod::Spec.new do |s|
   s.exclude_files = "BSImagePicker/Controller/BSAppDelegate.{h,m}", "BSImagePicker/Misc/main.m"
 
   s.requires_arc = true
+  s.dependency 'GPUImage'
   s.frameworks = 'AssetsLibrary', 'UIKit', 'MediaPlayer'
   s.screenshots = ["https://cloud.githubusercontent.com/assets/4034956/3030011/c7d86756-e03b-11e3-87b8-d682142967c2.png",
                    "https://cloud.githubusercontent.com/assets/4034956/3030009/c7d4c1b4-e03b-11e3-8cc7-bda50c85dd46.png",

@@ -14,5 +14,6 @@ extern NSString * const BS_NOTIFICATION_CHOOSE_CAMERA;
 @interface BSFakeAsset : ALAsset
 
 - (instancetype)initWithImage:(UIImage *)image;
+- (instancetype)initWithWhite;
 
 @end

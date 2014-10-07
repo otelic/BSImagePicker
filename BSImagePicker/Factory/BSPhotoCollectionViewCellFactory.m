@@ -24,15 +24,22 @@
 #import "BSPhotoCollectionViewCellFactory.h"
 #import "BSPhotoCell.h"
 #import "BSVideoCell.h"
+#import "BSLivePreviewCell.h"
+#import "BSFakeAsset.h"
+
+#import "BSVideoCamera.h"
+
 
 static NSString *kPhotoCellIdentifier =             @"photoCellIdentifier";
 static NSString *kVideoCellIdentifier =             @"videoCellIdentifier";
+static NSString *kLiveCellIdentifier  =             @"liveCellIdentifier";
 
 @implementation BSPhotoCollectionViewCellFactory
 
 + (void)registerCellIdentifiersForCollectionView:(UICollectionView *)aCollectionView {
     [aCollectionView registerClass:[BSPhotoCell class] forCellWithReuseIdentifier:kPhotoCellIdentifier];
     [aCollectionView registerClass:[BSVideoCell class] forCellWithReuseIdentifier:kVideoCellIdentifier];
+    [aCollectionView registerClass:[BSLivePreviewCell class] forCellWithReuseIdentifier:kLiveCellIdentifier];
 }
 
 + (CGSize)sizeAtIndexPath:(NSIndexPath *)anIndexPath forCollectionView:(UICollectionView *)aCollectionView withModel:(id<BSItemsModel>)aModel {
@@ -40,18 +47,7 @@ static NSString *kVideoCellIdentifier =             @"videoCellIdentifier";
     ALAsset *asset = [aModel itemAtIndexPath:anIndexPath];
     
     if([asset isKindOfClass:[ALAsset class]]) {
-        //Get thumbnail size
-        CGSize thumbnailSize = CGSizeMake(CGImageGetWidth(asset.thumbnail), CGImageGetHeight(asset.thumbnail));
-        
-        //We want 3 images in each row. So width should be viewWidth-(4*LEFT/RIGHT_INSET)/3
-        //Height should be adapted so we maintain the aspect ratio of thumbnail
-        //original height / original width * new width
-        
-        UIEdgeInsets sectionInsets = [[self class] edgeInsetAtSection:anIndexPath.section forCollectionView:aCollectionView withModel:aModel];
-        CGFloat minItemSpacing = [[self class] minimumItemSpacingAtSection:anIndexPath.section forCollectionView:aCollectionView withModel:aModel];
-        
-        itemSize = CGSizeMake((aCollectionView.bounds.size.width - (sectionInsets.left + 2*minItemSpacing + sectionInsets.right))/3.0, 100);
-        itemSize = CGSizeMake(itemSize.width, thumbnailSize.height / thumbnailSize.width * itemSize.width);
+        itemSize = [[self class] calcSizeForAsset:asset inSection:anIndexPath.section forCollectionView:aCollectionView withModel:aModel];
     }
     
     return itemSize;
@@ -69,6 +65,29 @@ static NSString *kVideoCellIdentifier =             @"videoCellIdentifier";
     return 2.0;
 }
 
++ (CGSize)calcSizeForAsset:(ALAsset *)asset inSection:(NSInteger)section forCollectionView:(UICollectionView *)aCollectionView withModel:(id<BSItemsModel>)aModel
+{
+    //Get thumbnail size
+    CGSize thumbnailSize = CGSizeMake(CGImageGetWidth(asset.thumbnail), CGImageGetHeight(asset.thumbnail));
+    
+    //We want 3 images in each row. So width should be viewWidth-(4*LEFT/RIGHT_INSET)/3
+    //Height should be adapted so we maintain the aspect ratio of thumbnail
+    //original height / original width * new width
+    
+    UIEdgeInsets sectionInsets = [[self class] edgeInsetAtSection:section forCollectionView:aCollectionView withModel:aModel];
+    CGFloat minItemSpacing = [[self class] minimumItemSpacingAtSection:section forCollectionView:aCollectionView withModel:aModel];
+    
+    CGSize itemSize = CGSizeMake((aCollectionView.bounds.size.width - (sectionInsets.left + 2*minItemSpacing + sectionInsets.right))/3.0, 100);
+    if ([asset isKindOfClass:[BSFakeAsset class]]) {
+        itemSize = CGSizeMake(itemSize.width, itemSize.width);
+    }
+    else {
+        itemSize = CGSizeMake(itemSize.width, thumbnailSize.height / thumbnailSize.width * itemSize.width);
+    }
+    
+    return itemSize;
+}
+
 - (UICollectionViewCell *)cellAtIndexPath:(NSIndexPath *)anIndexPath forCollectionView:(UICollectionView *)aCollectionView withModel:(id<BSItemsModel>)aModel {
     ALAsset *asset = [aModel itemAtIndexPath:anIndexPath];
     
@@ -82,11 +101,20 @@ static NSString *kVideoCellIdentifier =             @"videoCellIdentifier";
             
             [[(BSVideoCell *)photoCell durationLabel] setText:[formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[asset valueForProperty:ALAssetPropertyDuration] doubleValue]]]];
         }
-    } else {
+    } else if ([asset isKindOfClass:[BSFakeAsset class]]) {
+        photoCell = [aCollectionView dequeueReusableCellWithReuseIdentifier:kLiveCellIdentifier forIndexPath:anIndexPath];
+        
+        GPUImageVideoCamera *videoCamera = [[BSVideoCamera sharedInstance] videoCamera];
+        GPUImageView *liveVideoView = [((BSLivePreviewCell *)photoCell) livePreviewViewAsSubview];
+        
+        [videoCamera addTarget:liveVideoView];
+        [videoCamera startCameraCapture];    
+    }
+    else {
         photoCell = [aCollectionView dequeueReusableCellWithReuseIdentifier:kPhotoCellIdentifier forIndexPath:anIndexPath];
     }
     
-    if([asset isKindOfClass:[ALAsset class]]) {
+    if([asset isKindOfClass:[ALAsset class]] && [photoCell respondsToSelector:@selector(imageView)]) {
         [photoCell.imageView setImage:[UIImage imageWithCGImage:asset.thumbnail]];
     }
     

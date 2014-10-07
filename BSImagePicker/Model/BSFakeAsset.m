@@ -19,12 +19,32 @@ NSString * const BS_NOTIFICATION_CHOOSE_CAMERA = @"BS_NOTIFICATION_CHOOSE_CAMERA
 
 @implementation BSFakeAsset
 
+
+- (instancetype)initWithWhite
+{
+    self = [super init];
+    if (self) {
+
+        UIGraphicsBeginImageContext(CGSizeMake(10, 10));
+        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, 10, 10)];
+        [[UIColor whiteColor] setFill];
+        [rectanglePath fill];
+        _image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        _representation = [[BSFakeAssetRepresentation alloc] initWithImage:_image];
+    }
+    
+    return self;
+}
+
+
 - (instancetype)initWithImage:(UIImage *)image
 {
     self = [super init];
     if (self) {
         _image = image;
-        _representation = [[BSFakeAssetRepresentation alloc] initWithImage:self.image];
+        _representation = [[BSFakeAssetRepresentation alloc] initWithImage:_image];
     }
 
     return self;
