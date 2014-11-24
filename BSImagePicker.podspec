@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/mikaoj/BSImagePicker.git", :tag => "0.6.1" }
   s.source_files  = "BSImagePicker/**/*.{h,m}"
   s.exclude_files = "BSImagePicker/Controller/BSAppDelegate.{h,m}", "BSImagePicker/Misc/main.m"
-
+  s.resource_bundles = { 'CameraOverlay' => ['BSImagePicker/Supporting Files/Images.xcassets/camera in field.imageset/*.png'] }
   s.requires_arc = true
   s.dependency 'GPUImage'
   s.frameworks = 'AssetsLibrary', 'UIKit', 'MediaPlayer'
