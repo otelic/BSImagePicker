@@ -47,9 +47,11 @@
 
 - (GPUImageView *)livePreviewViewAsSubview
 {
-    self.livePreviewView = [[GPUImageView alloc] initWithFrame:self.bounds];
-    self.livePreviewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
-    [self addSubview:self.livePreviewView];
+    if (!self.livePreviewView) {
+        self.livePreviewView = [[GPUImageView alloc] initWithFrame:self.bounds];
+        self.livePreviewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
+        [self addSubview:self.livePreviewView];
+    }
     
     return self.livePreviewView;
 }
