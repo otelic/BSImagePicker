@@ -51,6 +51,14 @@
         self.livePreviewView = [[GPUImageView alloc] initWithFrame:self.bounds];
         self.livePreviewView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill;
         [self addSubview:self.livePreviewView];
+        
+        NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"CameraOverlay" ofType:@"bundle"];
+        NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+        NSString *filePath = [bundle pathForResource:@"camera-on-tile@2x" ofType:@"png"];
+        UIImage *overlay = [UIImage imageWithContentsOfFile:filePath];
+        UIImageView *overlayView = [[UIImageView alloc] initWithFrame:self.bounds];
+        overlayView.image = overlay;
+        [self addSubview:overlayView];
     }
     
     return self.livePreviewView;
