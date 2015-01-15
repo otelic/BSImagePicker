@@ -8,7 +8,6 @@
 
 #import "BSLivePreviewCell.h"
 
-
 @implementation BSLivePreviewCell
 
 - (void)commonInit
@@ -45,7 +44,7 @@
 
 #pragma mark - Camera view
 
-- (GPUImageView *)livePreviewViewAsSubview
+- (GPUImageView *)livePreviewViewAsSubviewWithTintColor:(UIColor *)tintColor
 {
     if (!self.livePreviewView) {
         self.livePreviewView = [[GPUImageView alloc] initWithFrame:self.bounds];
@@ -55,13 +54,20 @@
         NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"CameraOverlay" ofType:@"bundle"];
         NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
         NSString *filePath = [bundle pathForResource:@"camera-on-tile@2x" ofType:@"png"];
-        UIImage *overlay = [UIImage imageWithContentsOfFile:filePath];
-        UIImageView *overlayView = [[UIImageView alloc] initWithFrame:self.bounds];
-        overlayView.image = overlay;
-        [self addSubview:overlayView];
+        UIImage *overlay = [[UIImage imageWithContentsOfFile:filePath] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.overlay = [[UIImageView alloc] initWithFrame:self.bounds];
+        self.overlay.image = overlay;
+        self.overlay.tintColor = tintColor;
+        [self addSubview:self.overlay];
     }
     
     return self.livePreviewView;
+}
+
+- (void)setTintColor:(UIColor *)tintColor
+{
+    tintColor = tintColor;
+    self.overlay.tintColor = tintColor;
 }
 
 @end

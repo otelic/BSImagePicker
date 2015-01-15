@@ -105,7 +105,7 @@ static NSString *kLiveCellIdentifier  =             @"liveCellIdentifier";
         photoCell = [aCollectionView dequeueReusableCellWithReuseIdentifier:kLiveCellIdentifier forIndexPath:anIndexPath];
         
         GPUImageVideoCamera *videoCamera = [[BSVideoCamera sharedInstance] videoCamera];
-        GPUImageView *liveVideoView = [((BSLivePreviewCell *)photoCell) livePreviewViewAsSubview];
+        GPUImageView *liveVideoView = [((BSLivePreviewCell *)photoCell) livePreviewViewAsSubviewWithTintColor:aCollectionView.tintColor];
         
         [videoCamera addTarget:liveVideoView];
         [videoCamera startCameraCapture];    
@@ -119,6 +119,8 @@ static NSString *kLiveCellIdentifier  =             @"liveCellIdentifier";
     }
     
     [photoCell setSelected:[aModel isItemAtIndexPathSelected:anIndexPath] animated:NO];
+    
+    photoCell.tintColor = aCollectionView.tintColor;
     
     return photoCell;
 }

@@ -12,8 +12,9 @@
 @interface BSLivePreviewCell : UICollectionViewCell
 
 @property (strong, nonatomic) GPUImageView *livePreviewView;
+@property (strong, nonatomic) UIImageView  *overlay;
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
-- (GPUImageView *)livePreviewViewAsSubview;
+- (GPUImageView *)livePreviewViewAsSubviewWithTintColor:(UIColor *)tintColor;
 
 @end
