@@ -52,12 +52,7 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id item = [self.tableModel itemAtIndexPath:indexPath];
-    
-    //Only set if we have choosen a new group
-    if(![item isEqual:[self.tableModel.selectedItems firstObject]]) {
-        [self.tableModel selectItemAtIndexPath:indexPath];
-    }
+    [self.tableModel selectItemAtIndexPath:indexPath];
 }
 
 @end
